@@ -1,0 +1,2 @@
+# Randofy
+Discover music easily.
