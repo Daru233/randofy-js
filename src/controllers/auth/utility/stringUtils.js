@@ -1,13 +1,11 @@
 
 
 export const redirectStringBuilder = (scopes, redirect_uri, CLIENT_ID) => {
-    const redirectString =
-    'https://accounts.spotify.com/authorize' +
-    '?response_type=code' +
-    '&client_id=' +
-    CLIENT_ID +
-    (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
-    '&redirect_uri=' + encodeURIComponent(redirect_uri);
+    let redirectString ='https://accounts.spotify.com/authorize';
+    redirectString += '?response_type=code';
+    redirectString += '&client_id=' + CLIENT_ID;
+    redirectString += (scopes ? '&scope=' + encodeURIComponent(scopes) : '');
+    redirectString += '&redirect_uri=' + encodeURIComponent(redirect_uri);
     return redirectString;
 }
 
@@ -18,3 +16,13 @@ export const getQueryValue = (req) => {
     const queryParamsValue = arrayResult[1];
     return queryParamsValue;
 }
+
+
+// export const accessTokenBodyBuilder = (queryValue, CLIENT_ID, CLIENT_SECRET, redirect_uri) => {
+//     let requestBody = "grant_type=client_credentials";
+//     requestBody += "&code=" + queryValue;
+//     requestBody += "&redirect_uri=" + encodeURI(redirect_uri);
+//     requestBody += "&client_id=" + CLIENT_ID;
+//     requestBody += "&client_secret=" + CLIENT_SECRET;
+//     return requestBody;
+// }
