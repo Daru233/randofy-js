@@ -30,7 +30,7 @@ export const codeHandler = (req, res) => {
 const callAuth = (code) => {
 
     const headers = getHeaders();
-    const data = getData();
+    const data = getData(code);
 
     axios.post(
         TOKEN_URL,
@@ -43,7 +43,7 @@ const callAuth = (code) => {
     .catch(error => {
         console.log(error);
     });
-    
+
 }
 
 const getHeaders = () => {
@@ -55,11 +55,11 @@ const getHeaders = () => {
     return headers;
 }
 
-const getData = () => {
+const getData = (code) => {
     let data = {
-        grant_type: "client_credentials",
+        grant_type: "authorization_code",
         code: code,
-        redirectUri: redirect_uri,
+        redirect_uri: redirect_uri,
         client_id: CLIENT_ID,
         client_secret: CLIENT_SECRET,
     }
