@@ -1,8 +1,7 @@
 import config from "config";
 import axios from "axios";
-import btoa from "btoa";
 import queryString from "query-string";
-import { getQueryValue, redirectStringBuilder} from './utility/stringUtils.js';
+import { getQueryValue, redirectStringBuilder } from './utility/stringUtils.js';
 
 const CLIENT_ID = config.get("Spotify.CLIENT_ID");
 const CLIENT_SECRET = config.get("Spotify.CLIENT_SECRET");
@@ -10,39 +9,6 @@ const scopes = 'user-read-private user-read-email';
 const redirect_uri = "http://localhost:8080";
 const TOKEN_URL = "https://accounts.spotify.com/api/token";
 
-
-const callAuth = (code) => {
-
-    const headers = {
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-        }
-    };
-
-    let data = {
-        grant_type: "client_credentials",
-        code: code,
-        redirectUri: redirect_uri,
-        client_id: CLIENT_ID,
-        client_secret: CLIENT_SECRET,
-    }
-
-    // const requestBody = accessTokenBodyBuilder(queryValue, CLIENT_ID, CLIENT_SECRET, redirect_uri);
-
-    axios.post(
-        TOKEN_URL,
-        queryString.stringify(data),
-        // requestBody,
-        headers
-    )
-    .then(response => {
-        console.log(response);
-    })
-    .catch(response => {
-        console.log(response);
-    });
-
-}
 
 export const requestAuth = (req, res) => {
     try {
@@ -60,3 +26,42 @@ export const codeHandler = (req, res) => {
     console.log("Fetching access token");
     callAuth(getQueryValue(req));
 };
+
+const callAuth = (code) => {
+
+    const headers = getHeaders();
+    const data = getData();
+
+    axios.post(
+        TOKEN_URL,
+        queryString.stringify(data),
+        headers
+    )
+    .then(response => {
+        console.log(response.data);
+    })
+    .catch(error => {
+        console.log(error);
+    });
+    
+}
+
+const getHeaders = () => {
+    const headers = {
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        }
+    };
+    return headers;
+}
+
+const getData = () => {
+    let data = {
+        grant_type: "client_credentials",
+        code: code,
+        redirectUri: redirect_uri,
+        client_id: CLIENT_ID,
+        client_secret: CLIENT_SECRET,
+    }
+    return data;
+}

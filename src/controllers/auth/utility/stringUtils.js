@@ -16,13 +16,3 @@ export const getQueryValue = (req) => {
     const queryParamsValue = arrayResult[1];
     return queryParamsValue;
 }
-
-
-// export const accessTokenBodyBuilder = (queryValue, CLIENT_ID, CLIENT_SECRET, redirect_uri) => {
-//     let requestBody = "grant_type=client_credentials";
-//     requestBody += "&code=" + queryValue;
-//     requestBody += "&redirect_uri=" + encodeURI(redirect_uri);
-//     requestBody += "&client_id=" + CLIENT_ID;
-//     requestBody += "&client_secret=" + CLIENT_SECRET;
-//     return requestBody;
-// }
