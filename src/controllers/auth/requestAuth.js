@@ -9,34 +9,34 @@ const scopes = 'user-read-private user-read-email';
 const redirect_uri = "http://localhost:8080";
 const TOKEN_URL = "https://accounts.spotify.com/api/token";
 
+let access_token = "";
+
 
 export const requestAuth = (req, res) => {
     try {
-        console.log("Requesting Auth");
+        console.info("Requesting Redirect... ")
         res.redirect(redirectStringBuilder(scopes, redirect_uri, CLIENT_ID));
     } catch (error) {
+        console.warn("Redirect Request Failed.");
         console.log(error);
     }
 };
 
 export const codeHandler = (req, res) => {
-    res.send("Hello World!");
+    res.send("Handling Code");
+    console.info("Starting Code Capture...")
     console.log(getQueryValue(req));
-    console.log("Code captured successfuly");
-    console.log("Fetching access token");
+    console.info("Code Captured Successfuly.");
     callAuth(getQueryValue(req));
 };
 
 const callAuth = (code) => {
-
+    console.info("Building headers and data...");
     const headers = getHeaders();
-    const data = getData(code);
+    const data = queryString.stringify(getData(code));
 
-    axios.post(
-        TOKEN_URL,
-        queryString.stringify(data),
-        headers
-    )
+    console.info("Sending Request...");
+    axios.post(TOKEN_URL, data, headers)
     .then(response => {
         console.log(response.data);
     })
