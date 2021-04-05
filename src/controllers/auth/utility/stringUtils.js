@@ -1,5 +1,3 @@
-
-
 export const redirectStringBuilder = (scopes, redirect_uri, CLIENT_ID) => {
     let redirectString ='https://accounts.spotify.com/authorize';
     redirectString += '?response_type=code';
@@ -8,7 +6,6 @@ export const redirectStringBuilder = (scopes, redirect_uri, CLIENT_ID) => {
     redirectString += '&redirect_uri=' + encodeURIComponent(redirect_uri);
     return redirectString;
 }
-
 
 export const getQueryValue = (req) => {
     const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
