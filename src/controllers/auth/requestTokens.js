@@ -1,11 +1,12 @@
+import logging from '../../logger/logger.js';
 import { getQueryValue } from './utility/stringUtils.js';
 import { buildRequest } from "./utility/requestBuilder.js";
 
 
+const NAMESPACE = 'requestTokens'
+
 export const requestTokens = (req, res) => {
     res.send("Requesting Tokens...");
-    console.log("Auth Success");
-    console.log(getQueryValue(req));
-    console.log("Building Request");
+    logging.info(NAMESPACE, "Building Request");
     buildRequest(getQueryValue(req));
 };

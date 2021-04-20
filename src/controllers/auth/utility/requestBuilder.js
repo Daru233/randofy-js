@@ -1,7 +1,9 @@
 import config from "config";
+import logging from '../../../logger/logger.js';
 import queryString from "query-string";
 import axios from "axios";
 
+const NAMESPACE = 'requestBuilder'
 const CLIENT_ID = config.get("Spotify.CLIENT_ID");
 const CLIENT_SECRET = config.get("Spotify.CLIENT_SECRET");
 const redirect_uri = "http://localhost:8080/requestTokens";
@@ -17,10 +19,10 @@ export const buildRequest = (code) => {
 const sendRequest = async (header, data) => {
     await axios.post(TOKEN_URL, data, header)
     .then(response => {
-        console.log(response.data);
+        logging.info(NAMESPACE, "Response Data", response.data)
     })
     .catch(error => {
-        console.log(error);
+        logging.error(NAMESPACE, "Response Data", error)
     });
 }
 
