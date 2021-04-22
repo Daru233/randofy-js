@@ -9,7 +9,6 @@ const CLIENT_SECRET = config.get("Spotify.CLIENT_SECRET");
 const redirect_uri = "http://localhost:8080/requestTokens";
 const TOKEN_URL = "https://accounts.spotify.com/api/token";
 
-
 export const buildRequest = (code) => {
     const header = getHeaders();
     const data = queryString.stringify(getData(code));
@@ -19,10 +18,12 @@ export const buildRequest = (code) => {
 const sendRequest = async (header, data) => {
     await axios.post(TOKEN_URL, data, header)
     .then(response => {
-        logging.info(NAMESPACE, "Response Data", response.data)
+        // TODO: create handler
+        logging.info(NAMESPACE, "Response Data", response.data);
     })
     .catch(error => {
-        logging.error(NAMESPACE, "Response Data", error)
+        // TODO: create handler
+        logging.error(NAMESPACE, "Response Data", error);
     });
 }
 
